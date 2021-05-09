@@ -121,7 +121,7 @@ function add_social_share_icons($content)
 
     if(get_option("social-share-google-plus") == 1)
     {
-        $html = $html . "<div class='Google +'><a target='_blank' href='https://plus.google.com/share?url=" . $url . "'>Google +</a></div>";
+        $html = $html . "<div class='google-plus'><a target='_blank' href='https://plus.google.com/share?url=" . $url . "'>Google +</a></div>";
     }
 
     if(get_option("social-share-pinterest") == 1)
@@ -146,3 +146,12 @@ function add_social_share_icons($content)
 }
 
 add_filter("the_content", "add_social_share_icons");
+
+// Add css file
+function social_share_style() 
+{
+    wp_register_style("social-share-style-file", plugin_dir_url(__FILE__) . "style.css");
+    wp_enqueue_style("social-share-style-file");
+}
+
+add_action("wp_enqueue_scripts", "social_share_style");
