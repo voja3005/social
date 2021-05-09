@@ -98,3 +98,51 @@ function social_share_whatsapp_checkbox()
 }
  
 add_action("admin_init", "social_share_settings");
+
+// Display social sharing buttons
+function add_social_share_icons($content)
+{
+    $html = "<div class='social-share-wrapper'><div class='share-on'>Share on: </div>";
+
+    global $post;
+
+    $url = get_permalink($post->ID);
+    $url = esc_url($url);
+
+    if(get_option("social-share-facebook") == 1)
+    {
+        $html = $html . "<div class='facebook'><a target='_blank' href='http://www.facebook.com/sharer.php?u=" . $url . "'>Facebook</a></div>";
+    }
+
+    if(get_option("social-share-twitter") == 1)
+    {
+        $html = $html . "<div class='twitter'><a target='_blank' href='https://twitter.com/share?url=" . $url . "'>Twitter</a></div>";
+    }
+
+    if(get_option("social-share-google-plus") == 1)
+    {
+        $html = $html . "<div class='Google +'><a target='_blank' href='https://plus.google.com/share?url=" . $url . "'>Google +</a></div>";
+    }
+
+    if(get_option("social-share-pinterest") == 1)
+    {
+        $html = $html . "<div class='pinterest'><a target='_blank' href='http://pinterest.com/pin/create/link/?url=" . $url . "'>Pinterest</a></div>";
+    }
+
+    if(get_option("social-share-linkedin") == 1)
+    {
+        $html = $html . "<div class='linkedin'><a target='_blank' href='http://linkedin.com/shareArticle?url=" . $url . "'>Linkedin</a></div>";
+    }
+
+
+    if(get_option("social-share-whatsapp") == 1)
+    {
+        $html = $html . "<div class='whatsapp'><a target='_blank' href='https://web.whatsapp.com/send?text=" . $url . "' data-original-title='whatsapp' rel='tooltip' data-placement='left' data-action='share/whatsapp/share'>Whatsapp</a></div>";
+    }
+
+    $html = $html . "<div class='clear'></div></div>";
+
+    return $content = $content . $html;
+}
+
+add_filter("the_content", "add_social_share_icons");
